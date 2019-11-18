@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,900&display=swap");
+
+* {
+    box-sizing: border-box;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+:root {
+    --bg-color: #000000;
+    --accent-color: #1718b6;
+    --font-color: #ffff01;
+}
+
+body {
+    position: relative;
+    background-color: var(--bg-color);
+    color: var(--font-color);
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+main {
+    width: 60%;
+    margin: auto;
+}
+
+.logo {
+    flex-grow: 1;
+}
+
+.headertitle {
+    text-align: center;
+    flex-grow: 5;
+    text-decoration: none;
+    font-size: 3rem;
+}
+
+nav {
+    flex-grow: 0.5;
+}
+
+.search {
+    flex-grow: 0.5;
+}
+
+#Layer_1 {
+    width: 40rem;
+    fill: var(--accent-color);
+}
+
+
+
+.hide {
+    display: none;
+}
+
+li {
+    list-style: none;
+}
+
+.menu {
+    cursor: pointer;
+}
+
+.navwrap {
+    position: absolute;
+}
+
+.navbar {
+    position: fixed;
+    left: 80vw;
+    top: 0;
+    width: 20vw;
+    height: 100vh;
+    background-color: #4f4f4f;
+    margin: 0;
+    font-size: 6rem;
+    padding-left: 1rem;
+}
+
+.navli {
+    margin-top: 3rem;
+    text-decoration: none;
+    line-height: 90%;
+}
+
+.navli a {
+    letter-spacing: 1rem;
+    color: var(--font-color);
+}
+
+.event-post {
+    display: flex;
+    justify-content: space-between;
+    margin: 3rem 0 3rem 0;
+    border: var(--accent-color) solid 4px;
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+.game-post {
+    display: flex;
+    justify-content: space-between;
+    margin: 3rem 0 3rem 0;
+}
+
