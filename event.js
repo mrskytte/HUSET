@@ -28,12 +28,23 @@ var id = searchPara.get("id");
 init();
 
 function init() {
-    fetch("http://camelsaidwhat.com/T9WP/wp-json/wp/v2/huset-event/" + id)
+    fetch("http://camelsaidwhat.com/T9WP/wp-json/wp/v2/huset-event/" + id + "?_embed")
         .then(response => response.json())
         .then(showPost);
 }
 
 function showPost(post) {
+    var tagCount = post._embedded["wp:term"][1].length - 1;
+    while (tagCount != -1){
+        tagLink = 'index.html?tag=' + post._embedded["wp:term"][1][tagCount].id;
+        var listTag = document.createElement("li");
+        listTag.innerHTML = '<a href=""></a>';
+        listTag.querySelector("a").setAttribute("href", tagLink);
+        listTag.querySelector("a").textContent = post._embedded["wp:term"][1][tagCount].name;
+        document.querySelector(".tags").appendChild(listTag)
+        tagCount --;
+
+    }
     fetch(
         "http://camelsaidwhat.com/T9WP/wp-json/wp/v2/media/" +
             post.featured_media

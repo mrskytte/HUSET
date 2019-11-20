@@ -27,11 +27,11 @@ function closeMenu(event) {
 
 // LOG BASE URL FOR LATER LINKING
 var url = window.location.origin;
-console.log(url);
 
 // SEARCH URL FOR SECTION PROPERTY
 var searchPara = new URLSearchParams(window.location.search);
 var section = searchPara.get("section");
+var tag = searchPara.get("tag");
 
 // FETCH DATA FROM JSON / ?PER_PAGE=100 ALLOWS ME TO ACCESS ALL POSTS
 function getData() {
@@ -48,6 +48,8 @@ function showPosts(post) {
         post.forEach(showEvents);
     } else if (section == "games") {
         post.forEach(showGames);
+    } else if (tag) {
+        post.forEach(showTags);
     } else {
         post.forEach(frontPage);
     }
@@ -55,6 +57,117 @@ function showPosts(post) {
 
 const eventSection = document.querySelector("#events");
 const gameSection = document.querySelector("#games");
+
+// LOAD INDEX PAGE WITH TAGS
+function showTags(onePost) {
+    var id = onePost.id;
+    console.log(id)
+    tags = parseInt(tag, 10)
+    if (onePost.tags.indexOf(tags) != -1) {
+        if (onePost.categories.indexOf(3) != -1) {
+            const gameTemp = document.querySelector(".game-template").content;
+            var gameClone = gameTemp.cloneNode(true);
+
+            // FETCH FUNCTION THAT GRABS THE FEATURED IMG
+            fetch(
+                "http://camelsaidwhat.com/T9WP/wp-json/wp/v2/media/" +
+                    onePost.featured_media
+            )
+                .then(response => response.json())
+                .then(showImg);
+
+            gameClone.querySelector(".game-title").innerHTML =
+                onePost.title.rendered;
+            gameClone.querySelector(".game-shortdescription").textContent =
+                onePost.short_description;
+            // SET ID OF THIS POST SO IT CAN BE TARGET INSIDE THE DOM
+            gameClone.querySelector("article").setAttribute("id", id);
+            // SET ID OF THE FEATURED IMG SO IT CAN BE GRABBED BY A ABOVE IMG JSON FETCH
+            gameClone
+                .querySelector(".game-img")
+                .setAttribute("id", onePost.featured_media);
+            // APPEND POST TO PARENT ELEMENT
+            gameSection.appendChild(gameClone);
+
+            // APPENDS THE IMG AFTER THE POST HAS BEEN APPENDED / I COULDN'T MAKE IT WORK WITHOUT FIRST APPENDING THE POST SO THIS STEP MIGHT NOT BE BEST PRACTICE BUT IT WORKS
+            function showImg(img) {
+                document
+                    .getElementById(img.id)
+                    .setAttribute(
+                        "src",
+                        img.media_details.sizes.medium.source_url
+                    );
+                document
+                    .getElementById(img.id)
+                    .setAttribute("alt", img.media_details.alt_text);
+            }
+            // ADD EVENTLISTENER THAT'LL OPEN A NEW PAGE ONLY DISPLAYING THE CLICKED POST
+            document
+                .getElementById(id)
+                .addEventListener("click", function(target) {
+                    window.open(url + "/game.html?id=" + id, "_self");
+                });
+        } else {
+            const eventTemp = document.querySelector(".event-template").content;
+            var eventClone = eventTemp.cloneNode(true);
+
+            // FETCH FUNCTION THAT GRABS THE FEATURED IMG
+            fetch(
+                "http://camelsaidwhat.com/T9WP/wp-json/wp/v2/media/" +
+                    onePost.featured_media
+            )
+                .then(response => response.json())
+                .then(showImg);
+            // DEFINE DATE
+            var date = new Date(onePost.event_date);
+            // DEFINE TIME AND SUBTRACT THREE CHARACTERS FROM THE STRING
+            var time = onePost.event_time;
+            time = time.substring(0, time.length - 3);
+
+            eventClone.querySelector(".event-title").innerHTML =
+                onePost.title.rendered;
+            eventClone.querySelector(".event-time").textContent = time;
+            // ADD toDateString() TO MAKE THE DATE READABLE
+            eventClone.querySelector(
+                ".event-date"
+            ).textContent = date.toDateString();
+            eventClone.querySelector(".event-location").textContent =
+                onePost.location;
+            // MATH.ROUND TO CUT OFF DECIMALS
+            eventClone.querySelector(".event-price").textContent =
+                Math.round(onePost.price) + " kr";
+            eventClone.querySelector(".event-shortdescription").textContent =
+                onePost.short_description;
+            // SET ID OF THIS POST SO IT CAN BE TARGET INSIDE THE DOM
+            eventClone.querySelector("article").setAttribute("id", id);
+            // SET ID OF THE FEATURED IMG SO IT CAN BE GRABBED BY A ABOVE IMG JSON FETCH FUNCTION
+            eventClone
+                .querySelector(".event-img")
+                .setAttribute("id", onePost.featured_media);
+            eventSection.appendChild(eventClone);
+
+            // APPENDS THE IMG AFTER THE POST HAS BEEN APPENDED / I COULDN'T MAKE IT WORK WITHOUT FIRST APPENDING THE POST SO THIS STEP MIGHT NOT BE BEST PRACTICE BUT IT WORKS
+            function showImg(img) {
+                document
+                    .getElementById(img.id)
+                    .setAttribute(
+                        "src",
+                        img.media_details.sizes.medium.source_url
+                    );
+                document
+                    .getElementById(img.id)
+                    .setAttribute("alt", img.media_details.alt_text);
+            }
+            // ADD EVENTLISTENER THAT'LL OPEN A NEW PAGE ONLY DISPLAYING THE CLICKED POST
+            document
+                .getElementById(id)
+                .addEventListener("click", function(target) {
+                    window.open(url + "/event.html?id=" + id, "_self");
+                });
+            // ELSE SEE IF GAMES CATEGORY IS APPLIED
+        }
+    }
+}
 
 // LOAD DEFAULT INDEX PAGE
 function frontPage(onePost) {
@@ -96,9 +209,8 @@ function frontPage(onePost) {
         eventClone.querySelector(".event-location").textContent =
             onePost.location;
         // MATH.ROUND TO CUT OFF DECIMALS
-        eventClone.querySelector(".event-price").textContent = Math.round(
-            onePost.price
-        ) + " kr";
+        eventClone.querySelector(".event-price").textContent =
+            Math.round(onePost.price) + " kr";
         eventClone.querySelector(".event-shortdescription").textContent =
             onePost.short_description;
         // SET ID OF THIS POST SO IT CAN BE TARGET INSIDE THE DOM
@@ -194,13 +306,14 @@ function showEvents(onePost) {
 
         eventClone.querySelector(".event-title").innerHTML =
             onePost.title.rendered;
-        eventClone.querySelector(".event-time").textContent =
-            time;
-        eventClone.querySelector(".event-date").textContent =
-            date.toDateString();
+        eventClone.querySelector(".event-time").textContent = time;
+        eventClone.querySelector(
+            ".event-date"
+        ).textContent = date.toDateString();
         eventClone.querySelector(".event-location").textContent =
             onePost.location;
-        eventClone.querySelector(".event-price").textContent = onePost.price + " kr";
+        eventClone.querySelector(".event-price").textContent =
+            onePost.price + " kr";
         eventClone.querySelector(".event-shortdescription").textContent =
             onePost.short_description;
         eventClone.querySelector("article").setAttribute("id", id);

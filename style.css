@@ -17,6 +17,10 @@ body {
     color: var(--font-color);
 }
 
+h1 {
+    font-size: 5rem;
+}
+
 a {
     text-decoration: none;
 }
@@ -25,6 +29,16 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    font-size: 5rem;
+    margin: auto;
+    margin-top: 2rem;
+}
+
+@media only screen and (max-width: 900px) {
+    header {
+        font-size: 3rem;
+        align-items: baseline;
+    }
 }
 
 main {
@@ -32,31 +46,30 @@ main {
     margin: auto;
 }
 
-.logo {
-    flex-grow: 1;
+@media only screen and (max-width: 900px) {
+    main {
+        width: 95%;
+    }
 }
 
-.headertitle {
-    text-align: center;
-    flex-grow: 5;
-    text-decoration: none;
-    font-size: 3rem;
-}
-
-nav {
-    flex-grow: 0.5;
+.eventsheader,
+.gamesheader {
+    margin-left: 4rem;
 }
 
 .search {
-    flex-grow: 0.5;
+    padding-left: 1rem;
 }
 
 #Layer_1 {
-    width: 40rem;
+    height: 8rem;
     fill: var(--accent-color);
 }
-
-
+@media only screen and (max-width: 900px) {
+    #Layer_1 {
+        height: 4rem;
+    }
+}
 
 .hide {
     display: none;
@@ -85,6 +98,12 @@ li {
     font-size: 6rem;
     padding-left: 1rem;
 }
+@media only screen and (max-width: 900px) {
+    .navbar {
+        left: 50vw;
+        width: 50vw;
+    }
+}
 
 .navli {
     margin-top: 3rem;
@@ -97,9 +116,9 @@ li {
     color: var(--font-color);
 }
 
-.event-post {
-    display: flex;
-    justify-content: space-between;
+.event-post,
+.game-post {
+    display: grid;
     margin: 3rem 0 3rem 0;
     border: var(--accent-color) solid 4px;
     border-radius: 1rem;
@@ -107,8 +126,102 @@ li {
 }
 
 .game-post {
-    display: flex;
-    justify-content: space-between;
-    margin: 3rem 0 3rem 0;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "g-title g-img"
+        "g-des g-img";
+    grid-gap: 1rem;
 }
 
+.game-title {
+    grid-area: g-title;
+}
+
+.game-img {
+    grid-area: g-img;
+align-self: center;
+}
+
+.game-shortdescription {
+    grid-area: g-des;
+    line-height: 4rem;
+}
+
+.event-title {
+    grid-area: title;
+}
+
+.event-time {
+    grid-area: time;
+}
+
+.event-date {
+    grid-area: date;
+}
+
+.event-location {
+    grid-area: location;
+}
+
+.event-price {
+    grid-area: price;
+}
+
+.event-shortdescription{
+    padding-top: 2rem;
+    grid-area: des;
+}
+
+.event-img {
+    grid-area: img;
+    justify-self: end;
+    align-self: center;
+}
+
+.event-post {
+    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-areas:
+        "title title img"
+        "time date img"
+        "location price img"
+        "des des img";
+}
+
+@media only screen and (max-width: 900px) {
+    .event-post {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "title title"
+            "img img"
+            "time date"
+            "location price"
+            "des des";
+    }
+
+    .event-img {
+        grid-area: img;
+        justify-self: default;
+        align-self: default;
+        padding: 2rem 0 2rem 0;
+        margin: auto;
+    }
+
+    .game-img {
+        margin: auto;
+        padding: 2rem 0 2rem 0;
+    }
+
+    .game-post {
+        display: block;
+    }
+}
+
+.tags {
+    width: 130%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tags li {
+    padding-left:
+}
