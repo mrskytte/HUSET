@@ -14,7 +14,8 @@
     <body>
         <header>
             <div class="logo">
-                <a href="index.html"><svg
+                <a href="index.html"
+                    ><svg
                         id="Layer_1"
                         data-name="Layer 1"
                         xmlns="http://www.w3.org/2000/svg"
@@ -144,9 +145,14 @@
                             />
                         </g>
                     </svg>
-                    </a>            </div>
+                </a>
+            </div>
+            <i class="search glyphicon glyphicon-search"></i>
+            <form action="javascript:search()">
+         <input class="searchinfo" type="text">
+      </form>
             <nav>
-                <i class="glyphicon glyphicon-menu-hamburger menu"></i>
+                <p class="menu">MENU</p>
                 <div class="navwrap hide">
                     <ul class="navbar">
                         <li class="navli navhome">
@@ -168,7 +174,6 @@
                     </ul>
                 </div>
             </nav>
-            <i class="search glyphicon glyphicon-search"></i>
         </header>
 
         <main>
@@ -182,10 +187,10 @@
             </div>
 
             <div id="events">
-                <h1 class="eventsheader">EVENTS</h1>
+                <h1 class="eventsheader hide">EVENTS</h1>
             </div>
             <div id="games">
-                <h1 class="gamesheader">GAMES</h1>
+                <h1 class="gamesheader hide">GAMES</h1>
             </div>
         </main>
         <template class="event-template">

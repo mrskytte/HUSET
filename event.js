@@ -71,7 +71,7 @@ function showPost(post) {
     function showImg(img) {
         document
             .getElementById(img.id)
-            .setAttribute("src", img.media_details.sizes.medium.source_url);
+            .setAttribute("src", img.media_details.sizes.medium_large.source_url);
         document
             .getElementById(img.id)
             .setAttribute("alt", img.media_details.alt_text);

@@ -26,6 +26,7 @@ a {
 }
 
 header {
+    z-index: 0;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -97,6 +98,7 @@ li {
     margin: 0;
     font-size: 6rem;
     padding-left: 1rem;
+    z-index: 100;
 }
 @media only screen and (max-width: 900px) {
     .navbar {
@@ -224,4 +226,50 @@ align-self: center;
 
 .tags li {
     padding-left:
+}
+
+.single-event {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "title title"
+        "img img"
+        "time date"
+        "price location"
+        "l-des l-des"
+}
+
+.s-title {
+    grid-area: title;
+}
+
+.s-img {
+    grid-area: img;
+    margin: auto;
+    width: 100%;
+    padding-bottom: 1rem;
+}
+
+.s-time {
+    grid-area: time;
+}
+
+.s-date {
+    grid-area: date;
+}
+
+.s-location {
+    grid-area: location;
+}
+
+.s-price {
+    grid-area: price;
+}
+
+.s-ldes {
+    grid-area: l-des;
+}
+
+#single-page {
+    width: 80%;
 }
